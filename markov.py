@@ -46,30 +46,36 @@ def make_chains(text_string):
     for i in range(len(words) - 2):
         key = (words[i], words[i + 1])
         value = words[i + 2]
+
         if key not in chains:
             chains[key] = []
-        chains[key].append(value)
 
-    print(chains)
+        chains[key].append(value)
+        
     return chains
 
 def make_text(chains):
     """Return text from chains."""
 
-    key = choice(list(chains.keys()))
+    key = choice(list(chains.keys())) 
+    # Choosing new key word pair at random from dict.
     words = [key[0], key[1]]
-    new_word = choice(chains[key])
+    # Making key word pair into a list
+    word = choice(chains[key])
+    # Choosing at random the next word from possible next words (values).
 
-    # words = []
-    
-    # for key in chains:
-    #     new_key = (key, choice(value))
-    #     print(new_key)
-    print(" ".join(words))
+    while word is not None:
+        key = (key[1], word)
+        # The NEW key is the second word in the list followed by the next word after the list.
+        words.append(word)
+        # To each key word pair, add the next word.
+        word = choice(chains[key])
+        # Choosing at random the next word from possible next words (values).
+
     return " ".join(words)
+    # Finally joining all words.
 
-
-input_path = "green-eggs.txt"
+input_path = "gettysburg.txt"
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
